@@ -1,0 +1,16 @@
+
+
+                   ____  ________    ________          __ 
+                  / /  |/  / ___/   / ____/ /_  ____ _/ /_
+             __  / / /|_/ /\__ \   / /   / __ \/ __ `/ __/
+            / /_/ / /  / /___/ /  / /___/ / / / /_/ / /_  
+            \____/_/  /_//____/   \____/_/ /_/\__,_/\__/  
+
+
+Version 0.1 
+by Scholz Dominik & Samuel Schmidt
+-------------------------------------------------------------------------------
+
+Willkommen zu JMS Chat, einem einfachen MOM Chat Client, welcher 
+mithilfe von ActiveMQ als MOM Broker und JMS realisiert wurde.
+
