@@ -8,4 +8,5 @@ Hilfe                                                       JMS Chat v0.1
 /mail <ip> <nachricht>              - Schickt eine Nachricht an die IP
 /mailbox                            - Fragt die Mailbox ab
 /exit                               - verlässt den Chatroom
+/close                              - beendet das Programm
 

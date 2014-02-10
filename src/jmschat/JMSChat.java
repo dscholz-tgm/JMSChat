@@ -21,8 +21,8 @@ public class JMSChat {
         //Argumentcheck
         if (args.length < 2 || args.length > 3) System.err.println("Fehler bei der Angabe der Argumente!\nSynopsis: " + SYNOPSIS);
         else {
-            JMSChatClient jcc = new JMSChatClient(args[0],args[1]);
-            jcc.start();
+            ChatClient cc = new ChatClient(args[0],args[1]);
+            cc.start();
         }
     }
     

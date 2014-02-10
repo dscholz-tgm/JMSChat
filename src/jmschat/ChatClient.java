@@ -8,7 +8,7 @@ import jmschat.utils.ANSIColor;
  * @author Dominik
  * @version 0.1
  */
-public class JMSChatClient {
+public class ChatClient {
 
     private static final String DATA_PATH = "resources" + File.separator;
     private static final String FILE_WELCOME = DATA_PATH + "welcome.txt";
@@ -26,7 +26,7 @@ public class JMSChatClient {
      * @param url die Url zum MOM Broker
      * @param username der Username des Benutzers
      */
-    public JMSChatClient(String url, String username) {
+    public ChatClient(String url, String username) {
         this.url = url;
         this.username = username;
     }
@@ -51,6 +51,11 @@ public class JMSChatClient {
         display.showFile(FILE_WELCOME);
         display.out(ANSIColor.GREEN);
         display.showFile(FILE_HELP);
+        new Thread(new InputReader(this)).start();
+    }
+
+    public void out(String input) {
+        display.out(input);
     }
     
 
