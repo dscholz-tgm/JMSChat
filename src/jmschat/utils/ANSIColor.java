@@ -1,11 +1,11 @@
 package jmschat.utils;
 
 /**
- * Bringt Farbe ins Spiel
- *
- * @author Dominik
- * @version 0.1
- */
+* Bringt Farbe ins Spiel
+*
+* @author Dominik
+* @version 0.1
+*/
 public class ANSIColor {
     public static final String RESET = "\u001B[0m";
     

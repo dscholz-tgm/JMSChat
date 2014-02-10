@@ -1,10 +1,6 @@
 package jmschat;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import jmschat.utils.ANSIColor;
 
 /**
@@ -15,12 +11,14 @@ import jmschat.utils.ANSIColor;
 public class JMSChatClient {
 
     private static final String DATA_PATH = "resources" + File.separator;
-    private static final String FILE_WELCOME = "welcome.txt";
-    private static final String FILE_HELP = "help.txt";
+    private static final String FILE_WELCOME = DATA_PATH + "welcome.txt";
+    private static final String FILE_HELP = DATA_PATH + "help.txt";
 
     private String url;
     private String username;
     private String chatroom;
+    
+    private Display display = new Display();
 
     /**
      * Konstruktor
@@ -32,39 +30,28 @@ public class JMSChatClient {
         this.url = url;
         this.username = username;
     }
-
-    public void start() {
-        out(ANSIColor.CYAN);
-        displayFile(FILE_WELCOME);
-        out(ANSIColor.GREEN);
-        displayFile(FILE_HELP);
+    
+    private void changeServer(String url) {
+        this.url = url;
     }
-
-    private void displayFile(String filename) {
-        try {
-            FileReader fr = new FileReader(new File(DATA_PATH + filename));
-            BufferedReader br = new BufferedReader(fr);
-            StringBuilder sb = new StringBuilder();
-            String s = "";
-            while ((s = br.readLine()) != null) {
-                sb.append(s).append("\n");
-            }
-            br.close();
-            fr.close();
-            out(sb.toString());
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    
+    private void changeUsername(String username) {
+        this.username = username;
+    }
+    
+    private void changeChatroom(String chatroom) {
+        this.chatroom = chatroom;
     }
     
     /**
-     * Gibt eine Nachricht aus
-     * @param msg die Nachricht welche ausgegeben werden soll
+     * Startet den Client
      */
-    private void out(String msg) {
-        System.out.println(msg);
+    public void start() {
+        display.out(ANSIColor.CYAN);
+        display.showFile(FILE_WELCOME);
+        display.out(ANSIColor.GREEN);
+        display.showFile(FILE_HELP);
     }
+    
 
 }
