@@ -1,24 +1,27 @@
 package jmschat;
 
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import ui.InputReader;
 import ui.Display;
-import java.io.File;
 import jmschat.utils.ANSIColor;
 import jmschat.utils.TextReader;
 
 /**
  * Der Client
  * @author Dominik
- * @version 0.3
+ * @version 0.4
  */
 public class ChatClient {
     
     private String url;
     private String username;
     private String chatroom;
+    private String ip;
     
     private Display display = new Display();
     private ChatController controller = new ChatController();
+    private MessageConstructor mc;
 
     /**
      * Konstruktor
@@ -29,6 +32,12 @@ public class ChatClient {
     public ChatClient(String url, String username) {
         this.url = url;
         this.username = username;
+         try {
+            ip = Inet4Address.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) {
+            ip = "127.0.0.1";
+        }
+        mc = new MessageConstructor(username, ip);
     }
     
     /**
@@ -106,6 +115,6 @@ public class ChatClient {
      */
     public void promt() {
         display.inlineOut(ANSIColor.DARK_GRAY);
-        display.inlineOut("Username: ");
+        display.inlineOut(mc.construct(""));
     }
 }

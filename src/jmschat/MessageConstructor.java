@@ -3,7 +3,7 @@ package jmschat;
 /**
  * Konstruiert die Nachrichten
  * @author Dominik
- * @version 0.1
+ * @version 0.2
  */
 public class MessageConstructor {
     
@@ -19,16 +19,18 @@ public class MessageConstructor {
      * Erstellt Default Message Format nach:
      * [%username%] <%ip%>: %msg%
      */
-    private MessageConstructor() {
+    public MessageConstructor(String username, String ip) {
         format = "[" + FORMAT_USERNAME + "] <" + FORMAT_IP + ">: " + FORMAT_MSG;
+        updateCache(username, ip);
     }
     
     /**
      * Erweiterter Konstruktor, gibtt ein Messageformat vor
      * @param format das Messageformat welches benutzt werden soll
      */
-    private MessageConstructor(String format) {
+    public MessageConstructor(String format, String username, String ip) {
         this.format = format;
+        updateCache(username, ip);
     }
     
     /**
