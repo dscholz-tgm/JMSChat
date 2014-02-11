@@ -1,4 +1,4 @@
-package jmschat.input;
+package jmschat;
 
 /**
  * Konstruiert die Nachrichten

@@ -1,26 +1,24 @@
 package jmschat;
 
-import jmschat.input.InputReader;
-import jmschat.output.Display;
+import ui.InputReader;
+import ui.Display;
 import java.io.File;
 import jmschat.utils.ANSIColor;
+import jmschat.utils.TextReader;
 
 /**
  * Der Client
  * @author Dominik
- * @version 0.2
+ * @version 0.3
  */
 public class ChatClient {
-
-    private static final String DATA_PATH = "resources" + File.separator;
-    private static final String FILE_WELCOME = DATA_PATH + "welcome.txt";
-    private static final String FILE_HELP = DATA_PATH + "help.txt";
     
     private String url;
     private String username;
     private String chatroom;
     
     private Display display = new Display();
+    private ChatController controller = new ChatController();
 
     /**
      * Konstruktor
@@ -31,6 +29,22 @@ public class ChatClient {
     public ChatClient(String url, String username) {
         this.url = url;
         this.username = username;
+    }
+    
+    /**
+     * Gibt das Display zurueck
+     * @return das Display
+     */
+    public Display getDisplay() {
+        return display;
+    }
+    
+    /**
+     * Gibt den ChatController zurueck
+     * @return den ChatController
+     */
+    public ChatController getController() {
+        return controller;
     }
     
     /**
@@ -62,9 +76,9 @@ public class ChatClient {
      */
     public void start() {
         display.inlineOut(ANSIColor.CYAN);
-        display.showFile(FILE_WELCOME);
+        display.out(TextReader.read(TextReader.FILE_WELCOME));
         display.inlineOut(ANSIColor.GREEN);
-        display.showFile(FILE_HELP);
+        display.out(TextReader.read(TextReader.FILE_HELP));
         display.inlineOut(ANSIColor.RESET);
         new Thread(new InputReader(this)).start();
     }
@@ -82,7 +96,9 @@ public class ChatClient {
      * @param msg die Fehlernachricht welche ausgegeben werden soll
      */
     public void err(String msg) {
-        display.out(ANSIColor.RED + msg + ANSIColor.RESET);
+        display.inlineOut(ANSIColor.RED);
+        display.out(msg);
+        display.inlineOut(ANSIColor.RESET);
     }
 
     /**
