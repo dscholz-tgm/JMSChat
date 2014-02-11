@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Stellt den Text dar
  * @author Dominik
- * @version 0.1
+ * @version 0.2
  */
 public class Display {
     
@@ -42,5 +42,13 @@ public class Display {
      */
     public void out(String msg) {
         System.out.println(msg);
+    }
+
+    /**
+     * Gibt eine Nachricht ohne Linebreak aus!
+     * @param msg die Nachricht welche ausgegeben werden soll
+     */
+    public void inlineOut(String msg) {
+        System.out.print(msg);
     }
 }
