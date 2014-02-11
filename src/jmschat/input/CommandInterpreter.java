@@ -1,4 +1,4 @@
-package jmschat;
+package jmschat.input;
 
 /**
  * Interpretiert die Commands und fuehrt sie aus

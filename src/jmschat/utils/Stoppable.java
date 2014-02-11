@@ -1,4 +1,4 @@
-package jmschat;
+package jmschat.utils;
 
 /**
  * Macht Threads Stoppbar

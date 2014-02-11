@@ -1,4 +1,4 @@
-package jmschat;
+package jmschat.output;
 
 import java.io.BufferedReader;
 import java.io.File;

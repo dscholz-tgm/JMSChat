@@ -1,5 +1,7 @@
 package jmschat;
 
+import jmschat.input.InputReader;
+import jmschat.output.Display;
 import java.io.File;
 import jmschat.utils.ANSIColor;
 

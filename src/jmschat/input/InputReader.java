@@ -1,6 +1,8 @@
-package jmschat;
+package jmschat.input;
 
+import jmschat.utils.Stoppable;
 import java.util.Scanner;
+import jmschat.ChatClient;
 import jmschat.utils.ANSIColor;
 
 /**
