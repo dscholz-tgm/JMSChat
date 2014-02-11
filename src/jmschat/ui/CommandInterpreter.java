@@ -1,4 +1,4 @@
-package ui;
+package jmschat.ui;
 
 import java.util.Arrays;
 import jmschat.ChatClient;

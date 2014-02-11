@@ -8,8 +8,8 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
-import ui.InputReader;
-import ui.Display;
+import jmschat.ui.InputReader;
+import jmschat.ui.Display;
 import jmschat.utils.ANSIColor;
 import jmschat.utils.TextReader;
 import org.apache.activemq.ActiveMQConnection;
@@ -42,9 +42,10 @@ public class ChatClient {
      * @param url die Url zum MOM Broker
      * @param username der Username des Benutzers
      */
-    public ChatClient(String url, String username) {
+    public ChatClient(String url, String username, String chatroom) {
         this.url = url;
         this.username = username;
+        this.chatroom = chatroom;
          try {
             ip = Inet4Address.getLocalHost().getHostAddress();
         } catch (UnknownHostException ex) {
@@ -63,24 +64,29 @@ public class ChatClient {
         display.out(TextReader.read(TextReader.FILE_HELP));
         display.inlineOut(ANSIColor.RESET);
         new Thread(new InputReader(this)).start();
-        connect();
-        createChatroom();
-        new Thread(new MessageReader(this,consumer)).start();
+        if(connect()) {
+            createChatroom();
+            new Thread(new MessageReader(this,consumer)).start();
+        }
     }
        
     /**
      * Verbinden und Erstellen der Connection
+     * @return ob die Verbindung erfolgreich war
      */
-    public void connect() {
+    public boolean connect() {
         try {
             close();
-            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(username + ip, ActiveMQConnection.DEFAULT_PASSWORD, url);
+            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER, ActiveMQConnection.DEFAULT_PASSWORD, ActiveMQConnection.DEFAULT_BROKER_URL);
             connection = connectionFactory.createConnection();
             connection.start();
             
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            return true;
         } catch (JMSException ex) {
             err("Fehler beim Verbinden zum Server " + url + ", bitte versuche es erneut");
+            ex.printStackTrace();
+            return false;
         }
     }
     
@@ -151,9 +157,10 @@ public class ChatClient {
      * @param msg die Fehlernachricht welche ausgegeben werden soll
      */
     public void err(String msg) {
-        display.inlineOut(ANSIColor.RED);
+        display.inlineOut("\n" + ANSIColor.RED);
         display.out(msg);
         display.inlineOut(ANSIColor.RESET);
+        promt();
     }
 
     /**

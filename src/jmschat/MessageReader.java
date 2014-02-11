@@ -20,6 +20,7 @@ public class MessageReader implements Runnable, Stoppable {
 
     public MessageReader(ChatClient cc, MessageConsumer consumer) {
         this.cc = cc;
+        this.consumer = consumer;
     }
 
     @Override
@@ -38,6 +39,7 @@ public class MessageReader implements Runnable, Stoppable {
                     message.acknowledge();
                 }
             } catch (JMSException ex) {
+                ex.printStackTrace();
             }
         }
     }

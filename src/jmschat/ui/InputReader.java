@@ -1,4 +1,4 @@
-package ui;
+package jmschat.ui;
 
 import jmschat.utils.Stoppable;
 import java.util.Scanner;

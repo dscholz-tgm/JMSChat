@@ -1,4 +1,4 @@
-package ui;
+package jmschat.ui;
 
 /**
  * Stellt den Text dar
