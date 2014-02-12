@@ -4,15 +4,17 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 import jmschat.ui.InputReader;
 import jmschat.ui.Display;
 import jmschat.utils.ANSIColor;
 import jmschat.utils.TextReader;
-import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 /**
@@ -35,6 +37,7 @@ public class ChatClient {
     Connection connection = null;
     MessageConsumer consumer = null;
     Destination destination = null;
+    MessageProducer producer = null;
 
     /**
      * Konstruktor
@@ -99,6 +102,8 @@ public class ChatClient {
             destination = session.createTopic(chatroom);
             
             consumer = session.createConsumer(destination);
+            producer = session.createProducer(destination);
+            producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
         } catch (JMSException ex) {
             err("Fehler beim Erstellen des Chatrooms " + chatroom + ", bitte versuche es erneut");
         }
@@ -179,6 +184,18 @@ public class ChatClient {
             if(consumer != null) consumer.close();
             if(session != null) session.close();
             if(connection != null) connection.close();
+        } catch (JMSException ex) {
+        }
+    }
+
+    /**
+     * Sendet die angegebene Message
+     * @param msg die zu sendende Nachricht
+     */
+    public void send(String msg) {
+        try {
+            TextMessage message = session.createTextMessage(mc.construct(msg));
+            producer.send(message);
         } catch (JMSException ex) {
         }
     }
