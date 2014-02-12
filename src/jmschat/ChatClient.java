@@ -83,7 +83,6 @@ public class ChatClient {
             connection.start();
             
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            session.setMessageListener(mr);
             return true;
         } catch (JMSException ex) {
             err("Fehler beim Verbinden zum Server " + url + ", bitte versuche es erneut");
@@ -101,6 +100,7 @@ public class ChatClient {
             destination = session.createTopic(chatroom);
             
             consumer = session.createConsumer(destination);
+            consumer.setMessageListener(mr);
             producer = session.createProducer(destination);
             producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
         } catch (JMSException ex) {

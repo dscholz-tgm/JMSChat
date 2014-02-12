@@ -20,7 +20,7 @@ public class MessageConstructor {
      * [%username%] <%ip%>: %msg%
      */
     public MessageConstructor(String username, String ip) {
-        format = "" + FORMAT_USERNAME + "@" + FORMAT_IP + ": " + FORMAT_MSG;
+        format = "[" + FORMAT_USERNAME + "@" + FORMAT_IP + "]: " + FORMAT_MSG;
         updateCache(username, ip);
     }
     
