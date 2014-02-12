@@ -50,12 +50,12 @@ public class ChatClient {
         this.url = "tcp://" + url + ":61616";
         this.username = username;
         this.chatroom = chatroom;
-        controller = new ChatController(this);
          try {
             ip = Inet4Address.getLocalHost().getHostAddress();
         } catch (UnknownHostException ex) {
             ip = "127.0.0.1";
         }
+        controller = new ChatController(this);
         mc = new MessageConstructor(username, ip, chatroom);
         mr = new MessageReader(this);
     }
@@ -96,6 +96,7 @@ public class ChatClient {
     public void createChatroom() {
         try {
             if(consumer != null) consumer.close();
+            if(producer != null) producer.close();
             destination = session.createTopic(chatroom);
             
             consumer = session.createConsumer(destination);
@@ -124,22 +125,35 @@ public class ChatClient {
     }
     
     /**
-     * Wechselt den Server
-     * @param url die URL zu dem Server, zu welchem gewechselt werden soll
+     * Gibt die Connection zurueck
+     * @return die Connection
      */
-    public void changeServer(String url) {
-        this.url = url;
-        connect();
-        createChatroom();
+    public Connection getConnection() {
+        return connection;
     }
     
     /**
-     * Aendert den Usernamnen 
-     * @param username der Usernamen zu welchem geandert werden soll
+     * Gibt die Session zurueck
+     * @return die Session
      */
-    public void changeUsername(String username) {
-        this.username = username;
-        mc.updateCache(username, ip, chatroom);
+    public Session getSession() {
+        return session;
+    }
+    
+    /**
+     * Gibt den Username zurueck
+     * @return der Username
+     */
+    public String getUsername() {
+        return username;
+    }
+    
+    /**
+     * Gibt die IP zurueck
+     * @return die IP
+     */
+    public String getIP() {
+        return ip;
     }
     
     /**
@@ -185,6 +199,7 @@ public class ChatClient {
      */
     public void close() {
         try {
+            if(producer != null) producer.close();
             if(consumer != null) consumer.close();
             if(session != null) session.close();
             if(connection != null) connection.close();

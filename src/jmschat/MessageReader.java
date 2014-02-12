@@ -28,6 +28,7 @@ public class MessageReader implements MessageListener {
         if (message instanceof TextMessage) {
             try {
                 cc.out(((TextMessage) message).getText());
+                message.acknowledge();
             } catch (JMSException ex) {
             }
         }

@@ -37,7 +37,7 @@ public class CommandInterpreter {
      * @param args die Command Argumente
      */
     public void execute(String cmd, String[] args) {
-        switch (cmd) {
+        switch (cmd.toLowerCase()) {
             case "/help":
                 controller.help();
                 break;
@@ -52,7 +52,11 @@ public class CommandInterpreter {
                 else explain(cmd);
                 break;
             case "/mail":
-                if(args.length == 2) controller.mail(args[0]);
+                if(args.length >= 2) {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 1; i < args.length; i++) sb.append(args[i]).append(" ");
+                    controller.mail(args[0],sb.toString());
+                }
                 else explain(cmd);
                 break;
             default:
