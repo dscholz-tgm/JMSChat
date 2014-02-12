@@ -86,7 +86,6 @@ public class ChatClient {
             return true;
         } catch (JMSException ex) {
             err("Fehler beim Verbinden zum Server " + url + ", bitte versuche es erneut");
-            ex.printStackTrace();
             return false;
         }
     }
