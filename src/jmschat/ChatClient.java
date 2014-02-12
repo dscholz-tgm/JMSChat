@@ -13,7 +13,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import jmschat.ui.InputReader;
 import jmschat.ui.Display;
-import jmschat.utils.ANSIColor;
 import jmschat.utils.TextReader;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
@@ -61,11 +60,8 @@ public class ChatClient {
      * Startet den Client
      */
     public void start() {
-        display.inlineOut(ANSIColor.CYAN);
         display.out(TextReader.read(TextReader.FILE_WELCOME));
-        display.inlineOut(ANSIColor.GREEN);
         display.out(TextReader.read(TextReader.FILE_HELP));
-        display.inlineOut(ANSIColor.RESET);
         new Thread(new InputReader(this)).start();
         if(connect()) {
             createChatroom();
@@ -162,18 +158,7 @@ public class ChatClient {
      * @param msg die Fehlernachricht welche ausgegeben werden soll
      */
     public void err(String msg) {
-        display.inlineOut("\n" + ANSIColor.RED);
         display.out(msg);
-        display.inlineOut(ANSIColor.RESET);
-        promt();
-    }
-
-    /**
-     * Gibt den Prompt aus (steht vor den eigenen Nachrichten)
-     */
-    public void promt() {
-        display.inlineOut(ANSIColor.DARK_GRAY);
-        display.inlineOut(mc.construct(""));
     }
 
     /**

@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.text.DefaultCaret;
 
 /**
  * Stellt den Text dar
@@ -19,7 +22,7 @@ import javax.swing.JTextField;
  */
 public class Display {
     
-    private static final int SCREEN_WIDTH = 800;
+    private static final int SCREEN_WIDTH = 600;
     private static final int SCREEN_HEIGHT = 600;
     
     JFrame frame;
@@ -31,6 +34,10 @@ public class Display {
     Font font;
     
     public Display() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        }
         rand = new Random(System.currentTimeMillis());
         frame = new JFrame("JMS Chat");
         frame.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width/2-SCREEN_WIDTH/2, 
@@ -40,10 +47,12 @@ public class Display {
         textArea = new JTextArea();
         font = new Font("Lucida Console",Font.PLAIN,12);
         textArea.setFont(font);
-        textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        textArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        textArea.setEditable(false);
+        ((DefaultCaret)textArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         mainPanel = new JPanel(new BorderLayout());
         bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         mainPanel.add(new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),BorderLayout.CENTER);
         textField = new JTextField();
         sendButton = new JButton("Send");

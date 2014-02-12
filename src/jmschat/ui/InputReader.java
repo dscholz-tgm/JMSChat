@@ -31,7 +31,6 @@ public class InputReader implements Runnable, Stoppable {
         String input;
         
         while (!stop) {
-            cc.promt();
             input = in.nextLine();
             if (input != null && input.length() > 0) {
                 if (input.charAt(0) == '/') ce.parse(input); //Ist ein Command
