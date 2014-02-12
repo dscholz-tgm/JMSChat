@@ -8,7 +8,7 @@ import jmschat.utils.TextReader;
 /**
  * Interpretiert die Commands und fuehrt sie aus
  * @author Dominik
- * @version 0.1
+ * @version 0.2
  */
 public class CommandInterpreter {
     
@@ -46,13 +46,6 @@ public class CommandInterpreter {
                 break;
             case "/exit":
                 controller.exit();
-                break;
-            case "/close":
-                controller.close();
-                break;
-            case "/server":
-                if(args.length == 1) controller.server(args[0]);
-                else explain(cmd);
                 break;
             case "/chatroom":
                 if(args.length == 1) controller.chatroom(args[0]);

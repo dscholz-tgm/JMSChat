@@ -5,7 +5,7 @@ import jmschat.utils.TextReader;
 /**
  * Kontrolliert den Chat
  * @author Dominik
- * @version 0.1
+ * @version 0.2
  */
 public class ChatController {
     
@@ -17,10 +17,6 @@ public class ChatController {
 
     public void help() {
         client.out(TextReader.read(TextReader.FILE_HELP));
-    }
-    
-    public void server(String string) {
-        client.changeServer(string);
     }
 
     public void chatroom(String string) {
@@ -34,11 +30,6 @@ public class ChatController {
     }
 
     public void exit() {
-        client.close();
+        client.exit();
     }
-    
-    public void close() {
-        client.shutdown();
-    }
-
 }

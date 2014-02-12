@@ -19,7 +19,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 /**
  * Der Client
  * @author Dominik
- * @version 0.6
+ * @version 0.7
  */
 public class ChatClient {
     
@@ -56,7 +56,7 @@ public class ChatClient {
         } catch (UnknownHostException ex) {
             ip = "127.0.0.1";
         }
-        mc = new MessageConstructor(username, ip);
+        mc = new MessageConstructor(username, ip, chatroom);
         mr = new MessageReader(this);
     }
         
@@ -139,7 +139,7 @@ public class ChatClient {
      */
     public void changeUsername(String username) {
         this.username = username;
-        mc.updateCache(username, ip);
+        mc.updateCache(username, ip, chatroom);
     }
     
     /**
@@ -149,6 +149,7 @@ public class ChatClient {
     public void changeChatroom(String chatroom) {
         this.chatroom = chatroom;
         createChatroom();
+        mc.updateCache(username, ip, chatroom);
     }
 
     /**
@@ -190,11 +191,12 @@ public class ChatClient {
         } catch (JMSException ex) {
         }
     }
-
+    
     /**
      * Beendet das Programm
      */
-    public void shutdown() {
+    public void exit() {
         close();
+        display.close();
     }
 }

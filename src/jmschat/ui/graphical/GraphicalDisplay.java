@@ -89,6 +89,7 @@ public class GraphicalDisplay implements Display {
      */
     @Override
     public void close() {
+        frame.dispose();
     }
 
     /**

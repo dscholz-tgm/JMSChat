@@ -3,10 +3,11 @@ package jmschat;
 /**
  * Konstruiert die Nachrichten
  * @author Dominik
- * @version 0.3
+ * @version 0.4
  */
 public class MessageConstructor {
     
+    private static final String FORMAT_CHATROOM = "%chatroom%";
     private static final String FORMAT_USERNAME = "%username%";
     private static final String FORMAT_IP = "%ip%";
     private static final String FORMAT_MSG = "%msg%";
@@ -19,18 +20,18 @@ public class MessageConstructor {
      * Erstellt Default Message Format nach:
      * [%username%] <%ip%>: %msg%
      */
-    public MessageConstructor(String username, String ip) {
-        format = "[" + FORMAT_USERNAME + "@" + FORMAT_IP + "]: " + FORMAT_MSG;
-        updateCache(username, ip);
+    public MessageConstructor(String username, String ip, String chatroom) {
+        format = "[" + FORMAT_CHATROOM + "]" + FORMAT_USERNAME + "|" + FORMAT_IP + ": " + FORMAT_MSG;
+        updateCache(username, ip, chatroom);
     }
     
     /**
      * Erweiterter Konstruktor, gibtt ein Messageformat vor
      * @param format das Messageformat welches benutzt werden soll
      */
-    public MessageConstructor(String format, String username, String ip) {
+    public MessageConstructor(String format, String username, String ip, String chatroom) {
         this.format = format;
-        updateCache(username, ip);
+        updateCache(username, ip, chatroom);
     }
     
     /**
@@ -45,9 +46,10 @@ public class MessageConstructor {
      * Dated den Cache up <-- That anglezism
      * @param username der neue Benutzername
      * @param ip die neue IP
+     * @param chatroom der Chatroom
      */
-    public void updateCache(String username, String ip) {
-        cachedFormat = format.replace(FORMAT_USERNAME, username).replace(FORMAT_IP, ip);
+    public void updateCache(String username, String ip, String chatroom) {
+        cachedFormat = format.replace(FORMAT_USERNAME, username).replace(FORMAT_IP, ip).replace(FORMAT_CHATROOM, chatroom);
     }
     
     /**
@@ -63,11 +65,12 @@ public class MessageConstructor {
      * Konstruiert die Nachricht
      * @param username der Benutzername
      * @param ip die IP
+     * @param chatroom der Chatroom
      * @param msg die Nachricht
      * @return die Konstruierte Nachricht
      */
-    public String construct(String username, String ip, String msg) {
-        updateCache(username,ip);
+    public String construct(String username, String ip, String chatroom, String msg) {
+        updateCache(username,ip,chatroom);
         return cachedFormat.replace(FORMAT_MSG, msg);
     }
 

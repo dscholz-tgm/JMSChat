@@ -3,10 +3,8 @@
 Hilfe                                                       JMS Chat v0.1
 -------------------------------------------------------------------------------
 /help                               - Zeigt die Hilfe
-/server <url>                       - Verbindet mit einem Server
 /chatroom <name>                    - Wechselt in den Chatroom
 /mail <ip> <nachricht>              - Schickt eine Nachricht an die IP
 /mailbox                            - Fragt die Mailbox ab
-/exit                               - verlässt den Chatroom
-/close                              - beendet das Programm
+/exit                               - verlässt das Programm
 
