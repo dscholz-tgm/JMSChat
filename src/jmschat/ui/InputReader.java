@@ -34,9 +34,7 @@ public class InputReader implements Runnable, Stoppable {
             input = in.nextLine();
             if (input != null && input.length() > 0) {
                 if (input.charAt(0) == '/') ce.parse(input); //Ist ein Command
-                else {
-                    cc.send(input);
-                }
+                else cc.send(input);
             } else cc.err("Ungültige Eingabe, Text wurde nicht gesendet!");
         }
     }

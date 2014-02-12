@@ -13,13 +13,14 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import jmschat.ui.InputReader;
 import jmschat.ui.Display;
+import jmschat.ui.GraphicalDisplay;
 import jmschat.utils.TextReader;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 /**
  * Der Client
  * @author Dominik
- * @version 0.5
+ * @version 0.6
  */
 public class ChatClient {
     
@@ -28,7 +29,7 @@ public class ChatClient {
     private String chatroom;
     private String ip;
     
-    private Display display = new Display();
+    private Display display;
     private ChatController controller = new ChatController();
     private MessageConstructor mc;
     
@@ -45,6 +46,7 @@ public class ChatClient {
      * @param username der Username des Benutzers
      */
     public ChatClient(String url, String username, String chatroom) {
+        display = new GraphicalDisplay();
         this.url = "tcp://" + url + ":61616";
         this.username = username;
         this.chatroom = chatroom;

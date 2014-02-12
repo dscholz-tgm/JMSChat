@@ -3,7 +3,7 @@ package jmschat;
 /**
  * Konstruiert die Nachrichten
  * @author Dominik
- * @version 0.2
+ * @version 0.3
  */
 public class MessageConstructor {
     
@@ -20,7 +20,7 @@ public class MessageConstructor {
      * [%username%] <%ip%>: %msg%
      */
     public MessageConstructor(String username, String ip) {
-        format = "[" + FORMAT_USERNAME + "] <" + FORMAT_IP + ">: " + FORMAT_MSG;
+        format = "" + FORMAT_USERNAME + "@" + FORMAT_IP + ": " + FORMAT_MSG;
         updateCache(username, ip);
     }
     
