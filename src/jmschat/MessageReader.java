@@ -25,7 +25,6 @@ public class MessageReader implements MessageListener {
      */
     @Override
     public void onMessage(Message message) {
-        System.out.println("11");
         if (message instanceof TextMessage) {
             try {
                 cc.out(((TextMessage) message).getText());
