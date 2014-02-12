@@ -1,45 +1,34 @@
 package jmschat;
 
-import jmschat.utils.Stoppable;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 /**
  * Reads and Reads and Reads
- *
+ * 
  * @author Dominik
- * @version 0.1
+ * @version 0.2
  */
-public class MessageReader implements Runnable, Stoppable {
+public class MessageReader implements MessageListener {
 
     private ChatClient cc;
-    private MessageConsumer consumer;
-    private boolean stop = false;
 
-    public MessageReader(ChatClient cc, MessageConsumer consumer) {
+    public MessageReader(ChatClient cc) {
         this.cc = cc;
-        this.consumer = consumer;
     }
 
+    /**
+     * Wird ausgefuehrt wenn eine Nachricht empfangen wird
+     * @param message wenn eine Nachricht empfangen wird
+     */
     @Override
-    public void stop() {
-        stop = true;
-    }
-
-    @Override
-    public void run() {
-        while (!stop) {
+    public void onMessage(Message message) {
+        if (message instanceof TextMessage) {
             try {
-                Message message = consumer.receive();
-                if (message instanceof TextMessage && message != null) {
-                    TextMessage textMessage = (TextMessage) message;
-                    cc.out(textMessage.getText());
-                    message.acknowledge();
-                }
+                cc.out(((TextMessage) message).getText());
             } catch (JMSException ex) {
-                ex.printStackTrace();
             }
         }
     }

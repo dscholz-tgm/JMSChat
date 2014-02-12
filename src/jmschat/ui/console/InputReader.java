@@ -1,8 +1,9 @@
-package jmschat.ui;
+package jmschat.ui.console;
 
 import jmschat.utils.Stoppable;
 import java.util.Scanner;
 import jmschat.ChatClient;
+import jmschat.ui.CommandInterpreter;
 
 /**
  * Liest den Input

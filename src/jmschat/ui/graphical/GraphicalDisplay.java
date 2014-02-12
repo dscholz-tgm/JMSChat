@@ -1,4 +1,4 @@
-package jmschat.ui;
+package jmschat.ui.graphical;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.DefaultCaret;
+import jmschat.ChatClient;
+import jmschat.ui.Display;
 
 /**
  * Stellt das Display in einer Grafischen Oberflaeche dar
@@ -21,9 +23,12 @@ import javax.swing.text.DefaultCaret;
  * @version 0.1
  */
 public class GraphicalDisplay implements Display {
-  
-    private static final int SCREEN_WIDTH = 600;
-    private static final int SCREEN_HEIGHT = 600;
+    
+    private static final int SCREEN_WIDTH = 640;
+    private static final int SCREEN_HEIGHT = 640;
+    
+    private ChatClient cc;
+    private SendListener sl;
     
     JFrame frame;
     JPanel mainPanel, bottomPanel;
@@ -33,11 +38,15 @@ public class GraphicalDisplay implements Display {
     Random rand;
     Font font;
     
-    public GraphicalDisplay() {
+    public GraphicalDisplay(ChatClient cc) {
+        this.cc = cc;
+        sl = new SendListener(this,cc);
+        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
         }
+        
         rand = new Random(System.currentTimeMillis());
         frame = new JFrame("JMS Chat");
         frame.setBounds(Toolkit.getDefaultToolkit().getScreenSize().width/2-SCREEN_WIDTH/2, 
@@ -49,6 +58,7 @@ public class GraphicalDisplay implements Display {
         textArea.setFont(font);
         textArea.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         textArea.setEditable(false);
+        textArea.setLineWrap(true);
         ((DefaultCaret)textArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         mainPanel = new JPanel(new BorderLayout());
         bottomPanel = new JPanel(new BorderLayout());
@@ -56,6 +66,8 @@ public class GraphicalDisplay implements Display {
         mainPanel.add(new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),BorderLayout.CENTER);
         textField = new JTextField();
         sendButton = new JButton("Send");
+        sendButton.addActionListener(sl);
+        textField.addActionListener(sl);
         bottomPanel.add(textField,BorderLayout.CENTER);
         bottomPanel.add(sendButton,BorderLayout.EAST);
         mainPanel.add(bottomPanel,BorderLayout.SOUTH);
@@ -69,7 +81,7 @@ public class GraphicalDisplay implements Display {
      */
     @Override
     public void out(String msg) {
-        textArea.append(msg);
+        textArea.append(msg + "\n");
     }
 
     /**
@@ -77,5 +89,20 @@ public class GraphicalDisplay implements Display {
      */
     @Override
     public void close() {
+    }
+
+    /**
+     * Gibt den Inhalt des Textfeldes zurueck
+     * @return den Inhalt des Textfeldes
+     */
+    public String getTextFieldText() {
+        return textField.getText();
+    }
+    
+    /**
+     * Setzt den Text des Textfeldes zueueck
+     */
+    public void resetTextField() {
+        textField.setText("");
     }
 }

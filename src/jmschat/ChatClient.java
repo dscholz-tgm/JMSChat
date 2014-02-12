@@ -11,9 +11,8 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-import jmschat.ui.InputReader;
 import jmschat.ui.Display;
-import jmschat.ui.GraphicalDisplay;
+import jmschat.ui.graphical.GraphicalDisplay;
 import jmschat.utils.TextReader;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
@@ -32,6 +31,7 @@ public class ChatClient {
     private Display display;
     private ChatController controller;
     private MessageConstructor mc;
+    private MessageReader mr;
     
     Session session = null;
     Connection connection = null;
@@ -46,7 +46,7 @@ public class ChatClient {
      * @param username der Username des Benutzers
      */
     public ChatClient(String url, String username, String chatroom) {
-        display = new GraphicalDisplay();
+        display = new GraphicalDisplay(this);
         this.url = "tcp://" + url + ":61616";
         this.username = username;
         this.chatroom = chatroom;
@@ -57,6 +57,7 @@ public class ChatClient {
             ip = "127.0.0.1";
         }
         mc = new MessageConstructor(username, ip);
+        mr = new MessageReader(this);
     }
         
     /**
@@ -67,7 +68,6 @@ public class ChatClient {
         display.out(TextReader.read(TextReader.FILE_HELP));
         if(connect()) {
             createChatroom();
-            new Thread(new MessageReader(this,consumer)).start();
         }
     }
        
@@ -83,6 +83,7 @@ public class ChatClient {
             connection.start();
             
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session.setMessageListener(mr);
             return true;
         } catch (JMSException ex) {
             err("Fehler beim Verbinden zum Server " + url + ", bitte versuche es erneut");

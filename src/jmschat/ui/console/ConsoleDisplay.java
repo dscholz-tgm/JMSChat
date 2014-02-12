@@ -1,6 +1,7 @@
-package jmschat.ui;
+package jmschat.ui.console;
 
 import jmschat.ChatClient;
+import jmschat.ui.Display;
 
 /**
  * Stellt das Display in einer Consolen Oberflaeche dar
