@@ -43,7 +43,7 @@ public class ChatClient {
      * @param username der Username des Benutzers
      */
     public ChatClient(String url, String username, String chatroom) {
-        this.url = url;
+        this.url = "tcp://" + url + ":61616";
         this.username = username;
         this.chatroom = chatroom;
          try {
@@ -77,7 +77,7 @@ public class ChatClient {
     public boolean connect() {
         try {
             close();
-            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER, ActiveMQConnection.DEFAULT_PASSWORD, ActiveMQConnection.DEFAULT_BROKER_URL);
+            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
             connection = connectionFactory.createConnection();
             connection.start();
             
