@@ -30,7 +30,7 @@ public class ChatClient {
     private String ip;
     
     private Display display;
-    private ChatController controller = new ChatController();
+    private ChatController controller;
     private MessageConstructor mc;
     
     Session session = null;
@@ -50,6 +50,7 @@ public class ChatClient {
         this.url = "tcp://" + url + ":61616";
         this.username = username;
         this.chatroom = chatroom;
+        controller = new ChatController(this);
          try {
             ip = Inet4Address.getLocalHost().getHostAddress();
         } catch (UnknownHostException ex) {
@@ -64,7 +65,6 @@ public class ChatClient {
     public void start() {
         display.out(TextReader.read(TextReader.FILE_WELCOME));
         display.out(TextReader.read(TextReader.FILE_HELP));
-        new Thread(new InputReader(this)).start();
         if(connect()) {
             createChatroom();
             new Thread(new MessageReader(this,consumer)).start();
@@ -127,24 +127,28 @@ public class ChatClient {
      * Wechselt den Server
      * @param url die URL zu dem Server, zu welchem gewechselt werden soll
      */
-    private void changeServer(String url) {
+    public void changeServer(String url) {
         this.url = url;
+        connect();
+        createChatroom();
     }
     
     /**
      * Aendert den Usernamnen 
      * @param username der Usernamen zu welchem geandert werden soll
      */
-    private void changeUsername(String username) {
+    public void changeUsername(String username) {
         this.username = username;
+        mc.updateCache(username, ip);
     }
     
     /**
      * Wechselt den Chatromm
      * @param chatroom der Name des Chatrooms zu welchem gewechselt werden soll
      */
-    private void changeChatroom(String chatroom) {
+    public void changeChatroom(String chatroom) {
         this.chatroom = chatroom;
+        createChatroom();
     }
 
     /**
@@ -162,19 +166,7 @@ public class ChatClient {
     public void err(String msg) {
         display.out(msg);
     }
-
-    /**
-     * Schliesst alle Verbindungen
-     */
-    private void close() {
-        try {
-            if(consumer != null) consumer.close();
-            if(session != null) session.close();
-            if(connection != null) connection.close();
-        } catch (JMSException ex) {
-        }
-    }
-
+    
     /**
      * Sendet die angegebene Message
      * @param msg die zu sendende Nachricht
@@ -185,5 +177,24 @@ public class ChatClient {
             producer.send(message);
         } catch (JMSException ex) {
         }
+    }
+
+    /**
+     * Schliesst alle Verbindungen
+     */
+    public void close() {
+        try {
+            if(consumer != null) consumer.close();
+            if(session != null) session.close();
+            if(connection != null) connection.close();
+        } catch (JMSException ex) {
+        }
+    }
+
+    /**
+     * Beendet das Programm
+     */
+    public void shutdown() {
+        close();
     }
 }

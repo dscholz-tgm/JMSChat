@@ -71,4 +71,11 @@ public class GraphicalDisplay implements Display {
     public void out(String msg) {
         textArea.append(msg);
     }
+
+    /**
+     * Dreht das Display ab
+     */
+    @Override
+    public void close() {
+    }
 }

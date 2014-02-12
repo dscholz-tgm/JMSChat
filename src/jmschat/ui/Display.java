@@ -11,4 +11,9 @@ public interface Display {
      * @param msg die Nachricht welche ausgegeben werden soll
      */
     public void out(String msg);
+    
+    /**
+     * Dreht das Display ab
+     */
+    public void close();
 }
