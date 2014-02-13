@@ -106,4 +106,12 @@ public class GraphicalDisplay implements Display {
     public void resetTextField() {
         textField.setText("");
     }
+
+    /**
+     * Gibt das Textarea zurueck
+     * @return das TextArea
+     */
+    public JTextArea getTextArea() {
+        return textArea;
+    }
 }

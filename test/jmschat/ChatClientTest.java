@@ -1,17 +1,7 @@
 package jmschat;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.jms.Connection;
-import javax.jms.Session;
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
-import jmschat.ui.Display;
-import jmschat.ui.graphical.GraphicalDisplay;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,25 +11,6 @@ import static org.junit.Assert.*;
  * Samuel
  */
 public class ChatClientTest {
-    
-    public ChatClientTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of start method, of class ChatClient.
@@ -106,7 +77,6 @@ public class ChatClientTest {
         try {
             result = jta.getText(jta.getLineStartOffset(jta.getLineCount()), jta.getLineEndOffset(jta.getLineCount()));
         } catch (BadLocationException ex) {
-            Logger.getLogger(ChatClientTest.class.getName()).log(Level.SEVERE, null, ex);
         }
         assertEquals(expResult, result);
     }
