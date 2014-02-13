@@ -119,6 +119,14 @@ public class ChatClient {
     }
     
     /**
+     * Gibt das Display zurueck
+     * @return das Display
+     */
+    public GraphicalDisplay getGraphicalDisplay() {
+        return (GraphicalDisplay) display;
+    }
+    
+    /**
      * Gibt den ChatController zurueck
      * @return den ChatController
      */
