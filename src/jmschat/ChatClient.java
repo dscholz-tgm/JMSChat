@@ -68,6 +68,8 @@ public class ChatClient {
         display.out(TextReader.read(TextReader.FILE_HELP));
         if(connect()) {
             createChatroom();
+        } else {
+            System.exit(-1);
         }
     }
        
@@ -85,7 +87,7 @@ public class ChatClient {
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             return true;
         } catch (JMSException ex) {
-            err("Fehler beim Verbinden zum Server " + url + ", bitte versuche es erneut");
+            System.err.println("Fehler beim Verbinden zum Server " + url + ", bitte versuche es erneut");
             return false;
         }
     }
